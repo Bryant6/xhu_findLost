@@ -1,0 +1,23 @@
+<cu-custom bgColor="bg-gradual-pink" isBack="{{true}}">
+  <view slot="backText">返回</view>
+  <view slot="content">分类</view>
+</cu-custom>
+
+
+<scroll-view scroll-y="true" style="height:300px;background:green;width:100%" bindscroll="scroll">
+  <view style="background:blue;height:200px">
+    11111
+  </view>
+  <view style="background:black;height:200px">
+    11111
+  </view>
+  <view style="background:red;height:100px" class="{{change>400?'change':''}}">
+    11111
+  </view>
+  <view style="background:pink;height:500px;padding:30px">
+    11111
+  </view>
+  <view style="background:blue;height:500px;padding:30px">
+    11111
+  </view>
+</scroll-view>

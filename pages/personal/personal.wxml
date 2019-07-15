@@ -1,0 +1,32 @@
+<cu-custom bgColor="bg-gradual-pink" isBack="{{true}}">
+	<view slot="backText">返回</view>
+	<view slot="content">我的</view>
+</cu-custom>
+
+
+<scroll-view scroll-y bindscroll="scroll" style="height:1150rpx;margin-top:86rpx">
+  <view class="grid col-2 margin-bottom text-center">
+    <view class="padding-sm" wx:for="{{findOwner}}">
+      <view class="radius  content-mine bg-white  padding-sm shadow-warp">
+        <view class="info-img">
+          <!-- <open-data type="userAvatarUrl"></open-data> -->
+          <image src="../../img/platform10.png"></image>
+        </view>
+        <view class="margin-top-sm flex">
+          <view class="text-xl flex-sub padding-right-sm">{{item.goodsName}}</view>
+          <view class="flex-sub padding-left-lg">
+            <view class="cu-tag line-green  flex-sub">卡类</view>
+          </view>
+        </view>
+        <view class="margin-top-sm flex  padding-left-sm padding-right-sm">
+          <view class="cu-item">
+            <text class="cuIcon-time xl text-gray"></text>
+          </view>
+          <view class="margin-left-sm">
+            {{item.goodsPubtime}}
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+</scroll-view>
