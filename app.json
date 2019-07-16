@@ -4,7 +4,6 @@
     "pages/personal/personal",
     "pages/index/index",
     "pages/logs/logs",
-    "pages/catagory/catagory",
     "pages/publish/publish"
   ],
   "window": {
@@ -24,11 +23,6 @@
         "pagePath": "pages/main/main",
         "text": "动态",
         "iconPath":"img/home.png"
-      },
-      {
-        "pagePath": "pages/catagory/catagory",
-        "text": "分类",
-        "iconPath":"img/search.png"
       },
       {
         "pagePath": "pages/publish/publish",
