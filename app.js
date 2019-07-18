@@ -31,6 +31,7 @@ App({
     })
   },
   globalData: {
-    userInfo: null
+    userInfo: null,
+    url:'http://mumucoder.free.idcfengye.com/'
   }
 })

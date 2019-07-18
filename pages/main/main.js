@@ -1,5 +1,6 @@
 // pages/main/main.js
 const app = getApp();
+const url=app.globalData.url;
 Page({
 
   /**
@@ -46,7 +47,7 @@ Page({
    */
   onLoad: function(options) {
     wx.request({
-      url: 'http://mumucoder.free.idcfengye.com/findOwner/findAll',
+      url: url+'findOwner/findAll',
       success: data => {
         console.log(data.data);
         this.setData({

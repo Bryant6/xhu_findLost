@@ -1,4 +1,64 @@
 <cu-custom bgColor="bg-gradual-pink" isBack="{{true}}">
-	<view slot="backText">返回</view>
-	<view slot="content">发布</view>
+  <view slot="backText">返回</view>
+  <view slot="content">发布</view>
 </cu-custom>
+
+<view class="cu-form-group text-xl">
+  失物寻找发布
+</view>
+<view class="cu-form-group margin-top-sm">
+  <view class="title">类别-物品</view>
+  <picker mode="multiSelector" bindchange="MultiChange" bindcolumnchange="MultiColumnChange" value="{{multiIndex}}" range="{{multiArray}}">
+    <view class="picker">
+      <view class="cu-tag line-green margin-right-lg">
+        {{multiArray[0][multiIndex[0]]}}
+      </view>
+      {{multiArray[1][multiIndex[1]]}}
+    </view>
+  </picker>
+</view>
+
+<view class="cu-form-group margin-top-sm">
+  附言
+</view>
+<view class="cu-form-group ">
+  <textarea maxlength="-1" bindinput="postscrptInput" placeholder="请输入相关情况，如具体时间地点等"></textarea>
+</view>
+
+<view class="cu-bar bg-white margin-top-sm">
+  <view class="action">
+    图片上传
+  </view>
+  <view class="action">
+    {{img_len}}/2
+  </view>
+</view>
+<view class="cu-form-group">
+  <view class="grid col-2 grid-square flex-sub">
+    <view class="bg-img" wx:for="{{imgList}}" wx:key="{{index}}" bindtap="ViewImage" data-url="{{imgList[index]}}">
+      <image src='{{imgList[index]}}' mode='aspectFill'></image>
+      <view class="cu-tag bg-red" catchtap="DelImg" data-index="{{index}}">
+        <text class="cuIcon-close"></text>
+      </view>
+    </view>
+    <view hidden="{{img_len<2?false:true}}"  class="solids" bindtap="ChooseImage" >
+      <text class="cuIcon-cameraadd"></text>
+    </view>
+  </view>
+</view>
+
+<view class="cu-form-group margin-top-sm">
+  <view class="title">联系方式</view>
+  <view class="margin-left-sm flex">
+    <view class="contact-way {{contact_select[0]?'cu-tag line-green':''}}" data-id="qq" bindtap="contact_way_change">扣扣</view>
+    <view class="contact-way {{contact_select[1]?'cu-tag line-green':''}}" data-id="weixin" bindtap="contact_way_change">微信</view>
+    <view class="contact-way {{contact_select[2]?'cu-tag line-green':''}}" data-id="phone" bindtap="contact_way_change">手机号</view>
+  </view>
+</view>
+<view class="cu-form-group">
+<input placeholder="亲，请输入你的{{contact_way}}" bindinput="contactInput"></input>
+</view>
+
+<view class="padding-sm">
+<button class="cu-btn bg-green margin-tb-sm lg">立即发布</button>
+</view>

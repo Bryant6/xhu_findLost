@@ -36,7 +36,7 @@
       </navigator>
     </view>
     <view class="cu-item arrow">
-      <navigator class="content" url="/pages/about/log/log" hover-class="none">
+      <navigator class="content" url="../personal_/suggest/suggest" hover-class="none">
         <text class="cuIcon-formfill text-green"></text>
         <text class="text-grey">意见反馈</text>
       </navigator>
