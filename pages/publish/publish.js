@@ -138,7 +138,7 @@ Page({
 
     var _this = this;
     //上传图片
-    for (let i = 0; i < img_len; i++) {
+    for (let i = 0; i < _this.data.img_len; i++) {
       wx.uploadFile({
         url: url + 'publish/submit_photo',
         filePath: _this.data.imgList[i],
@@ -166,14 +166,14 @@ Page({
       data: {
         userid: userid,
         username: username,
-        goods_bigkind: _this.data.multiArray[0][multiIndex[0]],//大类
-        goods_smallkind: _this.data.multiArray[1][multiIndex[1]],//小类
+        goods_bigkind: _this.data.multiArray[0][_this.data.multiIndex[0]],//大类
+        goods_smallkind: _this.data.multiArray[1][_this.data.multiIndex[1]],//小类
         goods_postscrit: _this.data.goods_postscrit,//附言
         goods_contact:_this.data.goods_contact,//联系方式
-        goods_contact_way: contact_way//联系方式 qq weixin phone
+        goods_contact_way: _this.data.contact_way//联系方式 qq weixin phone
       },
       header: {
-        'content-type': 'application/json' // 默认值
+        'content-type': 'application/json' 
       },
       success(res) {
         console.log(res.data)
