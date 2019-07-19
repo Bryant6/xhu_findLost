@@ -1,32 +1,70 @@
-<cu-custom bgColor="bg-gradual-pink" isBack="{{true}}">
-	<view slot="backText">返回</view>
-	<view slot="content">我的</view>
-</cu-custom>
+<scroll-view scroll-y class="scrollPage">
+  <view class="UCenter-bg">
+    <open-data type="userAvatarUrl" class="img"></open-data>
+    <view class="text-xl margin-top-sm">游客
+    </view>
+    <image src="https://image.weilanwl.com/gif/wave.gif" mode="scaleToFill" class="gif-wave"></image>
+  </view>
 
-
-<scroll-view scroll-y bindscroll="scroll" style="height:1150rpx;margin-top:86rpx">
-  <view class="grid col-2 margin-bottom text-center">
-    <view class="padding-sm" wx:for="{{findOwner}}">
-      <view class="radius  content-mine bg-white  padding-sm shadow-warp">
-        <view class="info-img">
-          <!-- <open-data type="userAvatarUrl"></open-data> -->
-          <image src="../../img/platform10.png"></image>
-        </view>
-        <view class="margin-top-sm flex">
-          <view class="text-xl flex-sub padding-right-sm">{{item.goodsName}}</view>
-          <view class="flex-sub padding-left-lg">
-            <view class="cu-tag line-green  flex-sub">卡类</view>
-          </view>
-        </view>
-        <view class="margin-top-sm flex  padding-left-sm padding-right-sm">
-          <view class="cu-item">
-            <text class="cuIcon-time xl text-gray"></text>
-          </view>
-          <view class="margin-left-sm">
-            {{item.goodsPubtime}}
-          </view>
-        </view>
+  <view class="padding flex text-center text-grey bg-white shadow-warp">
+    <view class="flex flex-sub flex-direction solid-right">
+      <view class="text-xxl text-orange">
+      <text class="cuIcon-my"></text>
       </view>
+      <view class="margin-top-sm">
+         身份认证</view>
+    </view>
+    <view class="flex flex-sub flex-direction solid-right">
+      <view class="text-xxl text-blue">0</view>
+      <view class="margin-top-sm">
+        消 息</view>
     </view>
   </view>
+
+
+  <view class="cu-list menu card-menu margin-top-xl margin-bottom-xl shadow-lg radius">
+    <view class="cu-item arrow">
+      <view class="content" bindtap="CopyLink">
+        <text class="cuIcon-text text-pink"></text>
+        <text class="text-grey">发布历史</text>
+      </view>
+    </view>
+    <view class="cu-item arrow">
+      <navigator class="content" url="" hover-class="none">
+        <text class="cuIcon-settings text-red"></text>
+        <text class="text-grey">更换配色</text>
+      </navigator>
+    </view>
+    <view class="cu-item arrow">
+      <navigator class="content" url="../personal_/suggest/suggest" hover-class="none">
+        <text class="cuIcon-formfill text-green"></text>
+        <text class="text-grey">意见反馈</text>
+      </navigator>
+    </view>
+    <view class="cu-item arrow">
+      <view class="content" bindtap="showQrcode">
+        <text class="cuIcon-emoji text-red"></text>
+        <text class="text-grey">公众号</text>
+      </view>
+    </view>
+    <view class="cu-item arrow">
+      <button class="cu-btn content" open-type="feedback">
+        <text class="cuIcon-info text-cyan"></text>
+        <text class="text-grey">关于小程序</text>
+      </button>
+    </view>
+    <view class="cu-item arrow">
+      <navigator class="content" url="/pages/about/test/list" hover-class="none">
+        <text class="cuIcon-creativefill text-orange"></text>
+        <text class="text-grey">一键桌面</text>
+      </navigator>
+    </view>
+     <view class="cu-item arrow">
+      <navigator class="content" url="/pages/about/test/list" hover-class="none">
+        <text class="cuIcon-discover text-blue"></text>
+        <text class="text-grey">更新日志</text>
+      </navigator>
+    </view>
+  </view>
+  <view class="cu-tabbar-height"></view>
 </scroll-view>

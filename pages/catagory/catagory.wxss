@@ -1,6 +1,0 @@
-/* pages/catagory/catagory.wxss */
-.change{
-  position: fixed;
-  width: 100%;
-  top:60px;
-}
