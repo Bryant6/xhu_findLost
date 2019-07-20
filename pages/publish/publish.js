@@ -17,17 +17,21 @@ Page({
     contact_way: 'qq号',
     goods_contact: null, //联系方式
     goods_postscrit: null, //附言
-    publish_category:null,//发布种类？失物寻找：失物归还
+    publish_category: null, //发布种类？失物寻找：失物归还
   },
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function(options) {
     console.log(options.id)
-    if(options.id=='1'){
-      this.setData({ publish_category:'失物寻找'})
-    }else{
-      this.setData({ publish_category: '失物归还' })
+    if (options.id == '1') {
+      this.setData({
+        publish_category: '失物寻找'
+      })
+    } else {
+      this.setData({
+        publish_category: '失物归还'
+      })
     }
   },
   postscrptInput: function(e) {
@@ -68,7 +72,7 @@ Page({
   },
   ChooseImage() {
     wx.chooseImage({
-      count: 2, //默认9
+      count: 1, //默认9
       sizeType: ['original', 'compressed'], //可以指定是原图还是压缩图，默认二者都有
       sourceType: ['album'], //从相册选择
       success: (res) => {
@@ -126,47 +130,95 @@ Page({
     let userName = "wang";
 
     var _this = this;
-    //上传图片和基本信息
-    wx.uploadFile({
-      url: url + 'publish/findGoodsSubmit',
-      filePath: _this.data.imgList[0],
-      name: 'file',
-      header: {
-        "Content-Type": "multipart/form-data"
-      },
-      formData: {
-        userId: userId,
-        userName: userName,
-        goodsBigkind: _this.data.multiArray[0][_this.data.multiIndex[0]], //大类
-        goodsSmallkind: _this.data.multiArray[1][_this.data.multiIndex[1]], //小类
-        goodsPostscrit: _this.data.goods_postscrit, //附言
-        goodsContact: _this.data.goods_contact, //联系方式
-        goodsContact_way: _this.data.contact_way //联系方式 qq weixin phone
-      },
-      success(res) {
-        var data = res.data
-        if (data == "yes") {
-          wx.showToast({
-            title: '上传成功',
-            icon: 'success',
-            duration: 2000
-          })
-        } else {
+
+    //如果选择了图片
+    if (img_select) {
+      //上传图片和基本信息
+      wx.uploadFile({
+        url: url + 'publish/findGoodsSubmit',
+        filePath: _this.data.imgList[0],
+        name: 'file',
+        header: {
+          "Content-Type": "multipart/form-data"
+        },
+        formData: {
+          userId: userId,
+          userName: userName,
+          goodsBigkind: _this.data.multiArray[0][_this.data.multiIndex[0]], //大类
+          goodsSmallkind: _this.data.multiArray[1][_this.data.multiIndex[1]], //小类
+          goodsPostscrit: _this.data.goods_postscrit, //附言
+          goodsContact: _this.data.goods_contact, //联系方式
+          goodsContact_way: _this.data.contact_way, //联系方式 qq weixin phone
+          publishCategory: _this.data.publish_category //失物寻找？失物归还
+        },
+        success(res) {
+          let data = res.data
+          if (data == "yes") {
+            wx.showToast({
+              title: '上传成功',
+              icon: 'success',
+              duration: 2000
+            })
+          } else {
+            wx.showToast({
+              title: '上传失败',
+              icon: 'none',
+              duration: 2000
+            })
+          }
+        },
+        fail() {
           wx.showToast({
             title: '上传失败',
             icon: 'none',
             duration: 2000
           })
         }
-      },
-      fail() {
-        wx.showToast({
-          title: '上传失败',
-          icon: 'none',
-          duration: 2000
-        })
-      }
-    })
+      })
+    }else{
+      //没有选择图片
+      wx.request({
+        url: url +'publish/findGoodsSubmitNoImg', 
+        data: {
+          userId: userId,
+          userName: userName,
+          goodsBigkind: _this.data.multiArray[0][_this.data.multiIndex[0]], //大类
+          goodsSmallkind: _this.data.multiArray[1][_this.data.multiIndex[1]], //小类
+          goodsPostscrit: _this.data.goods_postscrit, //附言
+          goodsContact: _this.data.goods_contact, //联系方式
+          goodsContact_way: _this.data.contact_way, //联系方式 qq weixin phone
+          publishCategory: _this.data.publish_category //失物寻找？失物归还
+        },
+        header: {
+          'content-type': 'application/json'
+        },
+        success(res) {
+          let data = res.data
+          if (data == "yes") {
+            wx.showToast({
+              title: '上传成功',
+              icon: 'success',
+              duration: 2000
+            })
+          } else {
+            wx.showToast({
+              title: '上传失败',
+              icon: 'none',
+              duration: 2000
+            })
+          }
+        },
+        fail() {
+          wx.showToast({
+            title: '上传失败',
+            icon: 'none',
+            duration: 2000
+          })
+        }
+      })
+      
+    }
+
   }
 
 })
