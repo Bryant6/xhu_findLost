@@ -17,12 +17,18 @@ Page({
     contact_way: 'qq号',
     goods_contact: null, //联系方式
     goods_postscrit: null, //附言
+    publish_category:null,//发布种类？失物寻找：失物归还
   },
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function(options) {
-
+    console.log(options.id)
+    if(options.id=='1'){
+      this.setData({ publish_category:'失物寻找'})
+    }else{
+      this.setData({ publish_category: '失物归还' })
+    }
   },
   postscrptInput: function(e) {
     this.data.goods_postscrit = e.detail.value;
@@ -67,8 +73,8 @@ Page({
       sourceType: ['album'], //从相册选择
       success: (res) => {
         this.setData({
-          img_select:true,
-          imgList:res.tempFilePaths
+          img_select: true,
+          imgList: res.tempFilePaths
         })
       }
     });
@@ -89,7 +95,7 @@ Page({
           this.setData({
             img_select: false
           })
-          this.data.imgList=[''];
+          this.data.imgList = [''];
         }
       }
     })
@@ -139,19 +145,19 @@ Page({
       },
       success(res) {
         var data = res.data
-        if(data=="yes"){
+        if (data == "yes") {
           wx.showToast({
             title: '上传成功',
-            icon:'success',
-            duration:2000
+            icon: 'success',
+            duration: 2000
           })
-        }else{
+        } else {
           wx.showToast({
             title: '上传失败',
             icon: 'none',
             duration: 2000
           })
-        }       
+        }
       },
       fail() {
         wx.showToast({

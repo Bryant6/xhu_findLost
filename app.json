@@ -5,7 +5,8 @@
     "pages/index/index",
     "pages/logs/logs",
     "pages/publish/publish",
-    "pages/personal_/suggest/suggest"
+    "pages/personal_/suggest/suggest",
+    "pages/publish_main/publish_main"
   ],
   "window": {
     "backgroundTextStyle": "light",
@@ -26,7 +27,7 @@
         "iconPath": "img/home.png"
       },
       {
-        "pagePath": "pages/publish/publish",
+        "pagePath": "pages/publish_main/publish_main",
         "text": "发布",
         "iconPath": "img/publish.png"
       },

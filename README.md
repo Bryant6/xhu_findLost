@@ -19,5 +19,6 @@
      + goodsContact ：联系方式（String）
      + goodsContact_way ：联系方式  qq weixn phone（String）
      + file：一张图片文件（File）
+     + publishCategory ：发布种类？失物寻找：失物归还（String）
    + 返回数据：“yes”(成功上传)   “no” (失败上传)
    + 返回类型：String

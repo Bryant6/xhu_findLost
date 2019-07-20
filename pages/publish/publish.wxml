@@ -4,7 +4,7 @@
 </cu-custom>
 
 <view class="cu-form-group text-xl">
-  失物寻找发布
+  {{publish_category}}发布
 </view>
 <view class="cu-form-group margin-top-sm">
   <view class="title">类别-物品</view>
