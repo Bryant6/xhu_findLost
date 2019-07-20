@@ -32,6 +32,7 @@ App({
   },
   globalData: {
     userInfo: null,
-    url:'http://mumucoder.free.idcfengye.com/'
+    // url:'http://mumucoder.free.idcfengye.com/'
+    url:'http://localhost:8080/'
   }
 })

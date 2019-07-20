@@ -30,18 +30,18 @@
     图片上传
   </view>
   <view class="action">
-    {{img_len}}/2
+     {{img_select?1:0}}/1
   </view>
 </view>
 <view class="cu-form-group">
   <view class="grid col-2 grid-square flex-sub">
-    <view class="bg-img" wx:for="{{imgList}}" wx:key="{{index}}" bindtap="ViewImage" data-url="{{imgList[index]}}">
-      <image src='{{imgList[index]}}' mode='aspectFill'></image>
-      <view class="cu-tag bg-red" catchtap="DelImg" data-index="{{index}}">
+    <view class="bg-img" hidden="{{!img_select}}" bindtap="ViewImage">
+      <image src='{{imgList[0]}}' mode='aspectFill'></image>
+      <view class="cu-tag bg-red" catchtap="DelImg">
         <text class="cuIcon-close"></text>
       </view>
     </view>
-    <view hidden="{{img_len<2?false:true}}"  class="solids" bindtap="ChooseImage" >
+    <view hidden="{{img_select}}" class="solids" bindtap="ChooseImage">
       <text class="cuIcon-cameraadd"></text>
     </view>
   </view>
@@ -56,9 +56,9 @@
   </view>
 </view>
 <view class="cu-form-group">
-<input placeholder="亲，请输入你的{{contact_way}}" bindinput="contactInput"></input>
+  <input placeholder="亲，请输入你的{{contact_way}}" bindinput="contactInput"></input>
 </view>
 
 <view class="padding-sm">
-<button class="cu-btn bg-green margin-tb-sm lg">立即发布</button>
+  <button class="cu-btn bg-green margin-tb-sm lg" bindtap="submit">立即发布</button>
 </view>
