@@ -121,9 +121,14 @@ Page({
 
     var _this = this;
     //上传图片和基本信息
-    wx.request({
-      url:url + 'publish/findGoodsSubmit',
-      data: {
+    wx.uploadFile({
+      url: url + 'publish/findGoodsSubmit',
+      filePath: _this.data.imgList[0],
+      name: 'file',
+      header: {
+        "Content-Type": "multipart/form-data"
+      },
+      formData: {
         userId: userId,
         userName: userName,
         goodsBigkind: _this.data.multiArray[0][_this.data.multiIndex[0]], //大类
@@ -132,40 +137,30 @@ Page({
         goodsContact: _this.data.goods_contact, //联系方式
         goodsContact_way: _this.data.contact_way //联系方式 qq weixin phone
       },
-      header: {
-        'content-type': 'application/json' // 默认值
-      },
       success(res) {
-        console.log(res.data)
+        var data = res.data
+        if(data=="yes"){
+          wx.showToast({
+            title: '上传成功',
+            icon:'success',
+            duration:2000
+          })
+        }else{
+          wx.showToast({
+            title: '上传失败',
+            icon: 'none',
+            duration: 2000
+          })
+        }       
+      },
+      fail() {
+        wx.showToast({
+          title: '上传失败',
+          icon: 'none',
+          duration: 2000
+        })
       }
     })
-
-    // wx.uploadFile({
-    //   url: url + 'publish/findGoodsSubmit',
-    //   filePath: _this.data.imgList[0],
-    //   name: 'file',
-    //   header: {
-    //     "Content-Type": "multipart/form-data"
-    //   },
-    //   formData: {
-    //     userId: userId,
-    //     userName: userName,
-    //     goodsBigkind: _this.data.multiArray[0][_this.data.multiIndex[0]], //大类
-    //     goodsSmallkind: _this.data.multiArray[1][_this.data.multiIndex[1]], //小类
-    //     goodsPostscrit: _this.data.goods_postscrit, //附言
-    //     goodsContact: _this.data.goods_contact, //联系方式
-    //     goodsContact_way: _this.data.contact_way //联系方式 qq weixin phone
-    //   },
-    //   success(res) {
-    //     var data = res.data
-    //     console.log(data);
-    //     // do something
-    //   },
-    //   fail() {
-    //     console.log("upload wrong")
-    //   }
-    // })
-
   }
 
 })

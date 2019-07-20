@@ -10,13 +10,14 @@
    + 返回格式：json
 2. 接口名字：publish/findGoodsSubmit
    + 概述：将失物寻找的发布信息上传到后台，并录入数据库
-   + 传入参数：
-     + userId：上传者的id
-     + userName：上传者的名字
-     + goodsBigkind ：物品大类
-     + goodsSmallkind ：物品小类
-     + goodsPostscrit ：发布附言
-     + goodsContact ：联系方式
-     + goodsContact_way ：联系方式  qq weixn phone
+   + 传入参数和数据类型：
+     + userId：上传者的id（String）
+     + userName：上传者的名字（String）
+     + goodsBigkind ：物品大类（String）
+     + goodsSmallkind ：物品小类（String）
+     + goodsPostscrit ：发布附言（String）
+     + goodsContact ：联系方式（String）
+     + goodsContact_way ：联系方式  qq weixn phone（String）
+     + file：一张图片文件（File）
    + 返回数据：“yes”(成功上传)   “no” (失败上传)
    + 返回类型：String
