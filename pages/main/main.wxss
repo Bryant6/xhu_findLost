@@ -20,3 +20,7 @@
 .select{
 border-bottom:2px solid green
 }
+.category-change{
+   opacity: 0.9;
+   transform: scale(1.01,1.01);
+}

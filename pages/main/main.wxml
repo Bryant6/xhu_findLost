@@ -3,14 +3,14 @@
   <view slot="content">动态</view>
 </cu-custom>
 
-<scroll-view scroll-y style="height:1150rpx">
+<scroll-view scroll-y style="height:1150rpx" bindscrolltolower="scrolltoBottom">
 
 
   <!-- 顶部导航 -->
   <view class="bg-white flex fixed-mine" style="top:{{CustomBar}}px">
     <view bindtap="selected_btn1" class="{{selected?'select':''}} flex-treble text-center text-green padding-sm text-lg">寻 找 失 物</view>
     <view class="flex-sub cu-item text-center padding-top-sm" bindtap="showModal" data-target="RadioModal">
-      <view class="cu-tag line-green">卡类</view>
+      <view class="cu-tag line-green">{{bigKind}}</view>
       <text class="cuIcon-unfold  text-green"></text>
     </view>
     <view bindtap="selected_btn2" class="{{!selected?'select':''}} text-green text-lg flex-treble text-center padding-sm">认 领 失 物</view>
@@ -28,16 +28,16 @@
 
   <!-- 内容主体 -->
   <view class="grid col-2 margin-bottom text-center margin-top-sm">
-    <view class="padding-sm" wx:for="{{findOwner}}">
+    <view class="padding-sm" wx:for="{{dataList}}">
       <view class="radius  content-mine bg-white  padding-sm shadow-warp">
         <view class="info-img">
           <open-data type="userAvatarUrl"></open-data>
           <!-- <image src="../../img/platform10.png"></image> -->
         </view>
         <view class="margin-top-sm flex">
-          <view class="text-xl flex-sub padding-right-sm">{{item.goodsName}}</view>
+          <view class="text-xl flex-sub padding-right-sm">{{item.goodsSmallkind}}</view>
           <view class="flex-sub padding-left-lg">
-            <view class="cu-tag line-green  flex-sub">卡类</view>
+            <view class="cu-tag line-green  flex-sub">{{item.goodsBigkind}}</view>
           </view>
         </view>
         <view class="margin-top-sm flex  padding-left-sm padding-right-sm">
@@ -57,20 +57,19 @@
 <!-- 分类 -->
 
 <view class="cu-modal {{modalName=='RadioModal'?'show':''}}" bindtap="hideModal">
-
   <!-- 这里的catchtap我直觉是屏蔽全局的bindtap -->
   <view class="cu-dialog margin-top-xl" catchtap>
     <view class="padding-sm;">
       <view class="grid col-3 text-center">
-        <view class="bg-red padding-xl">手机</view>
-        <view class="bg-orange padding-xl">钱包</view>
-        <view class="bg-brown padding-xl">衣物</view>
-        <view class="bg-olive padding-xl">卡类</view>
-        <view class="bg-green padding-xl">钥匙</view>
-        <view class="bg-blue padding-xl">电子</view>
-        <view class="bg-cyan padding-xl">首饰</view>
-        <view class="bg-purple padding-xl">书籍</view>
-        <view class="bg-mauve padding-xl">生活用品</view>
+        <view bindtap="bigKind_change" class="bg-red  padding-xl" data-bigkind='手机' hover-class="category-change">手机</view>
+        <view bindtap="bigKind_change" class="bg-orange padding-xl" data-bigkind='钱包' hover-class="category-change">钱包</view>
+        <view bindtap="bigKind_change" class="bg-brown padding-xl" data-bigkind='衣物' hover-class="category-change">衣物</view>
+        <view bindtap="bigKind_change" class="bg-olive padding-xl" data-bigkind='卡类' hover-class="category-change">卡类</view>
+        <view bindtap="bigKind_change" class="bg-green padding-xl" data-bigkind='全部' hover-class="category-change">全部</view>
+        <view bindtap="bigKind_change" class="bg-blue padding-xl" data-bigkind='电子' hover-class="category-change">电子</view>
+        <view bindtap="bigKind_change" class="bg-cyan padding-xl" data-bigkind='首饰' hover-class="category-change">首饰</view>
+        <view bindtap="bigKind_change" class="bg-purple padding-xl" data-bigkind='书籍' hover-class="category-change">书籍</view>
+        <view bindtap="bigKind_change" class="bg-mauve padding-xl" data-bigkind='生活用品' hover-class="category-change">生活用品</view>
       </view>
     </view>
 
