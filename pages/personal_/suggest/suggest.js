@@ -1,3 +1,5 @@
+const app = getApp();
+const url = app.globalData.url;
 // pages/personal_/suggest/suggest.js
 Page({
 

@@ -132,7 +132,7 @@ Page({
     var _this = this;
 
     //如果选择了图片
-    if (img_select) {
+    if (_this.data.img_select) {
       //上传图片和基本信息
       wx.uploadFile({
         url: url + 'publish/findGoodsSubmit',

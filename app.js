@@ -1,6 +1,10 @@
 //app.js
 App({
-  onLaunch: function () {
+  onLaunch: function() {
+    //首先清除数据缓存
+    wx.clearStorage();
+    console.log("清楚数据缓存");
+
     wx.getSystemInfo({
       success: e => {
         this.globalData.StatusBar = e.statusBarHeight;
@@ -32,8 +36,8 @@ App({
   },
   globalData: {
     userInfo: null,
-    // url:'http://mumucoder.free.idcfengye.com/'
-    url:'http://localhost:8080/',
+    url: 'http://mumucoder.free.idcfengye.com/'
+    // url:'http://localhost:8080/',
     // url: 'http://xiaobai.free.idcfengye.com/'
-  }
+  },
 })
