@@ -3,7 +3,7 @@
   <view slot="content">动态</view>
 </cu-custom>
 
-<scroll-view scroll-y style="height:1150rpx" bindscrolltolower="scrolltoBottom">
+<scroll-view scroll-y style="height:1150rpx" bindscrolltolower="scrolltoBottom" bindscrolltoupper="scrolltoTop">
 
 
   <!-- 顶部导航 -->

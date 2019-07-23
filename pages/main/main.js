@@ -22,7 +22,7 @@ function Toast() {
   wx.showToast({
     title: '亲，我已经到底了',
     icon: 'none',
-    duration: 2000
+    duration: 1400
   })
 }
 Page({
@@ -121,7 +121,6 @@ Page({
       //按照大类读取缓存
       try {
         let value = wx.getStorageSync(kind)
-        console.log(value);
         this.setData({
           selected: false,
           dataList: value.findOwnerSort
@@ -148,6 +147,9 @@ Page({
   },
   //选择大类
   bigKind_change: function(e) {
+    wx.showLoading({
+      title: '加载中',
+    })
     var that = this;
     var bigKind = e.currentTarget.dataset.bigkind;
     console.log("大类：" + bigKind);
@@ -182,6 +184,7 @@ Page({
               dataList: list.findOwnerSort
             })
           }
+          wx.hideLoading();
         } catch (e) {
           console.log(e);
         }
@@ -212,6 +215,7 @@ Page({
               dataList: data2.data
             })
           }
+          wx.hideLoading();
 
           json_obj.findGoodsSort = data1.data;
           json_obj.findOwnerSort = data2.data;
@@ -231,6 +235,9 @@ Page({
 
   //触底刷新
   scrolltoBottom: function() {
+    wx.showLoading({
+      title: '加载中',
+    })
     var that = this;
     console.log("到达底部");
     let kind = this.data.bigKind;
@@ -247,6 +254,7 @@ Page({
           success: function(res) {
             if (res.data.length == 0) {
               Toast();
+              return;
             }
             console.log("更新数据");
             let newData = value.findGoodsSort.concat(res.data);
@@ -254,6 +262,9 @@ Page({
             that.setData({
               dataList: newData
             })
+
+            wx.hideLoading()
+
             //更新缓存
             let page = value.findGoodsSortPage + 6;
             value.findGoodsSort = newData;
@@ -275,6 +286,7 @@ Page({
           success: function(res) {
             if (res.data.length == 0) {
               Toast();
+              return;
             }
             console.log("更新数据");
             let newData = value.findOwnerSort.concat(res.data);
@@ -282,6 +294,9 @@ Page({
             that.setData({
               dataList: newData
             })
+
+            wx.hideLoading()
+
             //更新缓存
             let page = value.findOwnerSortPage + 6;
             value.findOwnerSort = newData;
@@ -297,5 +312,74 @@ Page({
     } catch (e) {
       console.log(e);
     }
+  },
+  //触顶刷新
+  scrolltoTop: function() {
+    wx.showLoading({
+      title: '刷新中',
+    })
+    console.log("我已经到顶了");
+    var that = this;
+    let kind = this.data.bigKind;
+
+    //寻找失物
+    if (this.data.selected) {
+      wx.request({
+        url: url + 'findGoodsSort',
+        data: {
+          page: 0,
+          kind: kind
+        },
+        success: function(res) {
+          console.log(res.data)
+          that.setData({
+            dataList: res.data
+          })
+          wx.hideLoading();
+          //修改缓存
+          try {
+            let value = wx.getStorageSync(kind);
+            value.findGoodsSort = res.data;
+            value.findGoodsSortPage = 0;
+            wx.setStorage({
+              key: kind,
+              data: value
+            })
+          } catch (e) {
+            console.log(e)
+          }
+        }
+      })
+    } else {
+      //认领失物
+      wx.request({
+        url: url + 'findOwnerSort',
+        data: {
+          page: 0,
+          kind: kind
+        },
+        success: function(res) {
+          console.log(res.data)
+          that.setData({
+            dataList: res.data
+          })
+          wx.hideLoading();
+          //修改缓存
+          try {
+            let value = wx.getStorageSync(kind);
+            value.findOwnerSort = res.data;
+            value.findOwnerSortPage = 0;
+            wx.setStorage({
+              key: kind,
+              data: value
+            })
+          } catch (e) {
+            console.log(e)
+          }
+        }
+      })
+
+    }
+
   }
 })

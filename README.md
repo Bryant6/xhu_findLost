@@ -36,7 +36,7 @@
 
 + 返回数据说明：FindInfo为单个数据类，只需要返回每个数据的goods_id,goods_pubtime,goods_smallkind（小类）,goods_photo,goods_bigkind（大类）
 
-##### 3. 接口名字：findGoodsSort
+##### 3. 接口名字：publish/findGoodsSubmit
 
 + 板块：发布
 
