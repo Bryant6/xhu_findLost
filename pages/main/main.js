@@ -71,6 +71,9 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function(options) {
+    wx.showLoading({
+      title: '请等待',
+    })
     let that = this;
     Promise.all([
       //获取全部找失物数据
@@ -82,6 +85,7 @@ Page({
       that.setData({
         dataList: data1.data
       })
+      wx.hideLoading();
       let json_obj = {
         "findOwnerSort": data2.data,
         "findGoodsSort": data1.data,
@@ -94,7 +98,156 @@ Page({
       })
       console.log("全部--存入缓存成功")
     })
+  },
+  //下拉触顶刷新数据
+  onPullDownRefresh: function() {
+    wx.showLoading({
+      title: '刷新中',
+    })
+    console.log("我已经到顶了");
+    var that = this;
+    let kind = this.data.bigKind;
 
+    //寻找失物
+    if (this.data.selected) {
+      wx.request({
+        url: url + 'findGoodsSort',
+        data: {
+          page: 0,
+          kind: kind
+        },
+        success: function (res) {
+          console.log(res.data)
+          that.setData({
+            dataList: res.data
+          })
+          wx.stopPullDownRefresh();
+          wx.hideLoading();
+          //修改缓存
+          try {
+            let value = wx.getStorageSync(kind);
+            value.findGoodsSort = res.data;
+            value.findGoodsSortPage = 0;
+            wx.setStorage({
+              key: kind,
+              data: value
+            })
+          } catch (e) {
+            console.log(e)
+          }
+        }
+      })
+    } else {
+      //认领失物
+      wx.request({
+        url: url + 'findOwnerSort',
+        data: {
+          page: 0,
+          kind: kind
+        },
+        success: function (res) {
+          console.log(res.data)
+          that.setData({
+            dataList: res.data
+          })
+          wx.hideLoading();
+          //修改缓存
+          try {
+            let value = wx.getStorageSync(kind);
+            value.findOwnerSort = res.data;
+            value.findOwnerSortPage = 0;
+            wx.setStorage({
+              key: kind,
+              data: value
+            })
+          } catch (e) {
+            console.log(e)
+          }
+        }
+      })
+
+    }
+
+  },
+  //上拉触底刷新数据
+  onReachBottom:function(){
+    wx.showLoading({
+      title: '加载中',
+    })
+    var that = this;
+    console.log("到达底部");
+    let kind = this.data.bigKind;
+    console.log(kind)
+    try {
+      let value = wx.getStorageSync(kind);
+      if (this.data.selected) {
+        wx.request({
+          url: url + 'findGoodsSort',
+          data: {
+            page: value.findGoodsSortPage,
+            kind: kind
+          },
+          success: function (res) {
+            if (res.data.length == 0) {
+              Toast();
+              return;
+            }
+            console.log("更新数据");
+            let newData = value.findGoodsSort.concat(res.data);
+            console.log(newData);
+            that.setData({
+              dataList: newData
+            })
+
+            wx.hideLoading()
+
+            //更新缓存
+            let page = value.findGoodsSortPage + 6;
+            value.findGoodsSort = newData;
+            value.findGoodsSortPage = page;
+            wx.setStorage({
+              key: kind,
+              data: value
+            })
+            console.log("更新缓存")
+          }
+        })
+      } else {
+        wx.request({
+          url: url + 'findOwnerSort',
+          data: {
+            page: value.findOwnerSortPage,
+            kind: kind
+          },
+          success: function (res) {
+            if (res.data.length == 0) {
+              Toast();
+              return;
+            }
+            console.log("更新数据");
+            let newData = value.findOwnerSort.concat(res.data);
+            console.log(newData);
+            that.setData({
+              dataList: newData
+            })
+
+            wx.hideLoading()
+
+            //更新缓存
+            let page = value.findOwnerSortPage + 6;
+            value.findOwnerSort = newData;
+            value.findOwnerSortPage = page;
+            wx.setStorage({
+              key: kind,
+              data: value
+            })
+            console.log("更新缓存")
+          }
+        })
+      }
+    } catch (e) {
+      console.log(e);
+    }
   },
   //切换寻找失物
   selected_btn1: function() {
@@ -235,151 +388,11 @@ Page({
 
   //触底刷新
   scrolltoBottom: function() {
-    wx.showLoading({
-      title: '加载中',
-    })
-    var that = this;
-    console.log("到达底部");
-    let kind = this.data.bigKind;
-    console.log(kind)
-    try {
-      let value = wx.getStorageSync(kind);
-      if (this.data.selected) {
-        wx.request({
-          url: url + 'findGoodsSort',
-          data: {
-            page: value.findGoodsSortPage,
-            kind: kind
-          },
-          success: function(res) {
-            if (res.data.length == 0) {
-              Toast();
-              return;
-            }
-            console.log("更新数据");
-            let newData = value.findGoodsSort.concat(res.data);
-            console.log(newData);
-            that.setData({
-              dataList: newData
-            })
-
-            wx.hideLoading()
-
-            //更新缓存
-            let page = value.findGoodsSortPage + 6;
-            value.findGoodsSort = newData;
-            value.findGoodsSortPage = page;
-            wx.setStorage({
-              key: kind,
-              data: value
-            })
-            console.log("更新缓存")
-          }
-        })
-      } else {
-        wx.request({
-          url: url + 'findOwnerSort',
-          data: {
-            page: value.findOwnerSortPage,
-            kind: kind
-          },
-          success: function(res) {
-            if (res.data.length == 0) {
-              Toast();
-              return;
-            }
-            console.log("更新数据");
-            let newData = value.findOwnerSort.concat(res.data);
-            console.log(newData);
-            that.setData({
-              dataList: newData
-            })
-
-            wx.hideLoading()
-
-            //更新缓存
-            let page = value.findOwnerSortPage + 6;
-            value.findOwnerSort = newData;
-            value.findOwnerSortPage = page;
-            wx.setStorage({
-              key: kind,
-              data: value
-            })
-            console.log("更新缓存")
-          }
-        })
-      }
-    } catch (e) {
-      console.log(e);
-    }
+    
   },
   //触顶刷新
   scrolltoTop: function() {
-    wx.showLoading({
-      title: '刷新中',
-    })
-    console.log("我已经到顶了");
-    var that = this;
-    let kind = this.data.bigKind;
-
-    //寻找失物
-    if (this.data.selected) {
-      wx.request({
-        url: url + 'findGoodsSort',
-        data: {
-          page: 0,
-          kind: kind
-        },
-        success: function(res) {
-          console.log(res.data)
-          that.setData({
-            dataList: res.data
-          })
-          wx.hideLoading();
-          //修改缓存
-          try {
-            let value = wx.getStorageSync(kind);
-            value.findGoodsSort = res.data;
-            value.findGoodsSortPage = 0;
-            wx.setStorage({
-              key: kind,
-              data: value
-            })
-          } catch (e) {
-            console.log(e)
-          }
-        }
-      })
-    } else {
-      //认领失物
-      wx.request({
-        url: url + 'findOwnerSort',
-        data: {
-          page: 0,
-          kind: kind
-        },
-        success: function(res) {
-          console.log(res.data)
-          that.setData({
-            dataList: res.data
-          })
-          wx.hideLoading();
-          //修改缓存
-          try {
-            let value = wx.getStorageSync(kind);
-            value.findOwnerSort = res.data;
-            value.findOwnerSortPage = 0;
-            wx.setStorage({
-              key: kind,
-              data: value
-            })
-          } catch (e) {
-            console.log(e)
-          }
-        }
-      })
-
-    }
+    
 
   }
 })

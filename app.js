@@ -36,8 +36,8 @@ App({
   },
   globalData: {
     userInfo: null,
-    url: 'http://mumucoder.free.idcfengye.com/'
-    // url:'http://localhost:8080/',
+    // url: 'http://mumucoder.free.idcfengye.com/'
+    url:'http://localhost:8080/',
     // url: 'http://xiaobai.free.idcfengye.com/'
   },
 })

@@ -3,9 +3,6 @@
   <view slot="content">动态</view>
 </cu-custom>
 
-<scroll-view scroll-y style="height:1150rpx" bindscrolltolower="scrolltoBottom" bindscrolltoupper="scrolltoTop">
-
-
   <!-- 顶部导航 -->
   <view class="bg-white flex fixed-mine" style="top:{{CustomBar}}px">
     <view bindtap="selected_btn1" class="{{selected?'select':''}} flex-treble text-center text-green padding-sm text-lg">寻 找 失 物</view>
@@ -52,7 +49,7 @@
     </view>
   </view>
 
-</scroll-view>
+
 
 <!-- 分类 -->
 
